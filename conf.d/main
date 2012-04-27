@@ -1,0 +1,51 @@
+#!/bin/sh -ex
+
+ADMIN_PASS=turnkey
+
+
+# convenience symlinks
+ln -s /usr/share/dokuwiki /var/www/webroot
+ln -s /etc/dokuwiki /var/www/config
+
+# create admin user and set password
+MD5_PASS=$(echo -n $ADMIN_PASS | md5sum | cut -d " " -f 1)
+cat > /var/lib/dokuwiki/acl/users.auth.php<<EOF
+admin:$MD5_PASS:Admin:admin@example.com:admin,user
+EOF
+
+# set dokuwiki permissions (anonymous: create, authenticated: upload)
+cat > /var/lib/dokuwiki/acl/acl.auth.php<<EOF
+*                     @ALL        4
+*                     @user       8
+EOF
+
+# configure permissions so Configuration Manager plugin can be used
+chown_wwwdata() {
+    chown www-data:www-data $2
+    dpkg-statoverride --add www-data www-data $1 $2
+}
+chown_wwwdata 4755 /etc/dokuwiki
+chown_wwwdata 0644 /etc/dokuwiki/local.php
+
+# welcome page
+STARTPAGE=/var/lib/dokuwiki/data/pages/start.txt
+cat >$STARTPAGE<<EOF
+====== Getting started ======
+
+  * Log in as **admin** and start your wiki!
+  * Refer to the [[http://www.turnkeylinux.org/dokuwiki|TurnKey DokuWiki release notes]]
+  * [[wiki:syntax|Wiki Syntax]]
+  * [[wiki:dokuwiki|Local DokuWiki documentation]]
+  * [[doku>wiki:manual|The official DokuWiki manual]]
+EOF
+
+chown www-data:root $STARTPAGE
+
+# apache configuration
+rm -f /etc/apache2/conf.d/dokuwiki.conf
+touch /etc/apache2/conf.d/dokuwiki.conf
+ln -s /etc/dokuwiki/apache.conf /etc/apache2/sites-available/dokuwiki
+a2dissite default
+a2ensite dokuwiki
+a2enmod rewrite
+

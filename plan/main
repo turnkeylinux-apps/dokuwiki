@@ -1,0 +1,17 @@
+#include <turnkey/base>
+
+dokuwiki
+
+apache2
+apache2-mpm-prefork
+webmin-apache
+
+libapache2-mod-php5
+webmin-phpini
+
+postfix
+webmin-postfix
+
+php5-gd
+php5-cli
+php5-xcache
