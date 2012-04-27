@@ -36,7 +36,7 @@ cat >$STARTPAGE<<EOF
   * Refer to the [[http://www.turnkeylinux.org/dokuwiki|TurnKey DokuWiki release notes]]
   * [[wiki:syntax|Wiki Syntax]]
   * [[wiki:dokuwiki|Local DokuWiki documentation]]
-  * [[doku>wiki:manual|The official DokuWiki manual]]
+  * [[doku>manual|The official DokuWiki manual]]
 EOF
 
 chown www-data:root $STARTPAGE
