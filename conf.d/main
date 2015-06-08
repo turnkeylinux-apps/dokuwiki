@@ -42,10 +42,10 @@ EOF
 chown www-data:root $STARTPAGE
 
 # apache configuration
-rm -f /etc/apache2/conf.d/dokuwiki.conf
-touch /etc/apache2/conf.d/dokuwiki.conf
-ln -s /etc/dokuwiki/apache.conf /etc/apache2/sites-available/dokuwiki
-a2dissite default
+rm -f /etc/apache2/conf-available/dokuwiki.conf
+touch /etc/apache2/conf-available/dokuwiki.conf
+ln -s /etc/dokuwiki/apache.conf /etc/apache2/sites-available/dokuwiki.conf
+a2dissite 000-default
 a2ensite dokuwiki
 a2enmod rewrite
 
