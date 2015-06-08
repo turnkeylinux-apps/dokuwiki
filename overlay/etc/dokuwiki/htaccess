@@ -1,8 +1,6 @@
 ## deny access to the htaccess files
 <Files ~ "^[\._]ht">
-    Order allow,deny
-    Deny from all
-    Satisfy All
+    Require all denied
 </Files>
 
 RewriteEngine on
