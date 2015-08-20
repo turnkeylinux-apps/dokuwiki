@@ -10,6 +10,7 @@ Option:
 import re
 import sys
 import getopt
+import inithooks_cache
 import hashlib
 
 from dialog_wrapper import Dialog
@@ -52,6 +53,8 @@ def main():
             "DokuWiki Email",
             "Enter email address for the DokuWiki 'admin' account.",
             "admin@example.com")
+
+    inithooks_cache.write('APP_EMAIL', email)
     
     authfile = "/var/lib/dokuwiki/acl/users.auth.php"
     hashpass = hashlib.md5(password).hexdigest()
