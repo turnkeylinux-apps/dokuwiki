@@ -34,4 +34,4 @@ Credentials *(passwords set at first boot)*
 -  Dokuwiki: username **admin**
 
 .. _DokuWiki: http://www.dokuwiki.org
-.. _TurnKey Core: http://www.turnkeylinux.org/core
+.. _TurnKey Core: https://www.turnkeylinux.org/core
