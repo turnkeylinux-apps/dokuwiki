@@ -33,7 +33,7 @@ cat >$STARTPAGE<<EOF
 ====== Getting started ======
 
   * Log in as **admin** and start your wiki!
-  * Refer to the [[http://www.turnkeylinux.org/dokuwiki|TurnKey DokuWiki release notes]]
+  * Refer to the [[https://www.turnkeylinux.org/dokuwiki|TurnKey DokuWiki release notes]]
   * [[wiki:syntax|Wiki Syntax]]
   * [[wiki:dokuwiki|Local DokuWiki documentation]]
   * [[doku>manual|The official DokuWiki manual]]
