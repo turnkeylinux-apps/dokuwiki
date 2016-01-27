@@ -2,6 +2,8 @@
 
 ADMIN_PASS=turnkey
 
+# remove xcache to fix turnkeylinux/tracker#495
+apt-get purge -y php5-xcache
 
 # convenience symlinks
 ln -s /usr/share/dokuwiki /var/www/webroot
