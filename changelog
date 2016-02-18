@@ -1,8 +1,6 @@
 turnkey-dokuwiki-14.1 (1) turnkey; urgency=low
 
-  * Latest Debian Jessie package version of DokuWiki.
-  
-  * Removed php5-xcache package (resolves #495).
+  * Removed php5-xcache package (resolves #495].
 
   * Note: Please refer to turnkey-core's changelog for changes common to all
     appliances. Here we only describe changes specific to this appliance.
