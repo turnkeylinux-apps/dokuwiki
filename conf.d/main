@@ -24,11 +24,14 @@ EOF
 
 # configure permissions so Configuration Manager plugin can be used
 chown_wwwdata() {
-    chown www-data:www-data $2
+    chmod $3 $1 $2
+    chown $3 www-data:www-data $2
     dpkg-statoverride --add www-data www-data $1 $2
 }
 chown_wwwdata 4755 /etc/dokuwiki
 chown_wwwdata 0644 /etc/dokuwiki/local.php
+chown_wwwdata 0755 /var/lib/dokuwiki/lib/tpl -R
+chown_wwwdata 0755 /var/lib/dokuwiki/lib/plugins -R
 
 # welcome page
 STARTPAGE=/var/lib/dokuwiki/data/pages/start.txt
