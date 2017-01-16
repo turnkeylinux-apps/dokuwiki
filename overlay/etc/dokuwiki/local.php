@@ -11,5 +11,6 @@ $conf['lang'] = 'en';
 
 $conf['userewrite']     = 1;  //use .htaccess to provide clean-urls
 $conf['updatecheck']    = 0;  //managed by apt package manager
+$conf['xsendfile']	= 2;
 ?>
 

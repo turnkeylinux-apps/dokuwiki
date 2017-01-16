@@ -6,6 +6,7 @@ apache2
 apache2-mpm-prefork
 webmin-apache
 
+libapache2-mod-xsendfile
 libapache2-mod-php5
 webmin-phpini
 
