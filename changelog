@@ -1,3 +1,23 @@
+turnkey-dokuwiki-14.3 (1) turnkey; urgency=low
+
+  * 
+
+  * Installed security updates.
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Wed, 03 May 2017 09:49:38 +1000
+
+turnkey-dokuwiki-14.2 (1) turnkey; urgency=low
+
+  * Installed security updates.
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Wed, 03 May 2017 09:44:54 +1000
+
 turnkey-dokuwiki-14.1 (1) turnkey; urgency=low
 
   * Removed php5-xcache package (resolves #495].
