@@ -1,14 +1,12 @@
 #include <turnkey/base>
 
-dokuwiki
-
 apache2
-apache2-mpm-prefork
 webmin-apache
 
 libapache2-mod-xsendfile
-libapache2-mod-php5
+libapache2-mod-php
 webmin-phpini
 
-php5-gd
-php5-cli
+php-gd
+php-cli
+php-mbstring
