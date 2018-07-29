@@ -12,8 +12,7 @@ and on top of that:
 
 - Dokuwiki configurations:
    
-   - Installed from package management. See /var/www for links to file
-     paths.
+   - Installed from upstream. See /var/www for links to file paths.
    - Created admin user and group.
    - Granted authenticated users with upload privileges.
    - Fixed permissions for Configuration Manager plugin.
