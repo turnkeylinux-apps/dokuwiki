@@ -12,13 +12,15 @@ and on top of that:
 
 - Dokuwiki configurations:
    
-   - Installed from upstream. See /var/www for links to file paths.
+   - Installed from upstream source code to /var/www/dokuwiki.
    - Created admin user and group.
    - Granted authenticated users with upload privileges.
    - Fixed permissions for Configuration Manager plugin.
    - Clean URLs out of the box.
-   - Suppress annoying new version messages (irrelevant due to package
-     being managed by APT).
+
+   **Security note**: Updates to DokuWiki may require supervision so they
+   **ARE NOT** configured to install automatically. See `DokuWiki
+   documentation`_ for how to upgrade (manual upgrade instructions).
 
 - SSL support out of the box.
 - Postfix MTA (bound to localhost) to allow sending of email (e.g.,
@@ -34,3 +36,4 @@ Credentials *(passwords set at first boot)*
 
 .. _DokuWiki: http://www.dokuwiki.org
 .. _TurnKey Core: https://www.turnkeylinux.org/core
+.. _DokuWiki documentation: https://www.dokuwiki.org/install:upgrade
