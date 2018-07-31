@@ -11,7 +11,7 @@ import re
 import sys
 import getopt
 import inithooks_cache
-import hashlib
+from subprocess import check_output
 
 from dialog_wrapper import Dialog
 
@@ -21,6 +21,10 @@ def usage(s=None):
     print >> sys.stderr, "Syntax: %s [options]" % sys.argv[0]
     print >> sys.stderr, __doc__
     sys.exit(1)
+
+def genpasswd(password):
+    return check_output(['openssl', 'passwd', '-1', password]).rstrip()
+    
 
 def main():
     try:
@@ -56,25 +60,25 @@ def main():
 
     inithooks_cache.write('APP_EMAIL', email)
     
-    authfile = "/var/lib/dokuwiki/acl/users.auth.php"
-    hashpass = hashlib.md5(password).hexdigest()
+    authfile = "/var/www/dokuwiki/conf/users.auth.php"
+    hashpass = genpasswd(password)
 
-    new = []
+    lines = []
     for line in file(authfile).readlines():
         line = line.strip()
-        if not line:
-            continue
+        if not line or line.count(":") < 4:
+            lines.append(line)
+	    continue
 
         username, password, name, mailaddr, groups = line.split(":")
         if username == "admin":
             password = hashpass
             mailaddr = email
 
-        new.append(":".join([username, password, name, mailaddr, groups]))
+        lines.append(":".join([username, password, name, mailaddr, groups]))
 
-    fh = file(authfile, "w")
-    print >> fh, "\n".join(new)
-    fh.close()
+    with open(authfile, 'w') as fob:
+        fob.write('\n'.join(lines))
 
 if __name__ == "__main__":
     main()

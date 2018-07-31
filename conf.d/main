@@ -1,36 +1,49 @@
 #!/bin/sh -ex
 
+ADMIN_USER=admin
 ADMIN_PASS=turnkey
+ADMIN_MAIL=admin@example.com
 
-# convenience symlinks
-ln -s /usr/share/dokuwiki /var/www/webroot
-ln -s /etc/dokuwiki /var/www/config
+SRC=/usr/local/src
+WEBROOT=/var/www/dokuwiki
 
-# create admin user and set password
-MD5_PASS=$(echo -n $ADMIN_PASS | md5sum | cut -d " " -f 1)
-cat > /var/lib/dokuwiki/acl/users.auth.php<<EOF
-admin:$MD5_PASS:Admin:admin@example.com:admin,user
-EOF
+WIKINAME="TurnkeyLinux+DokuWiki"
+
+# unpack
+tar -zxf $SRC/dokuwiki-stable.tgz -C $(dirname $WEBROOT)
+mv $(dirname $WEBROOT)/dokuwiki-* $WEBROOT
+chown -R root:root $WEBROOT
+
+chown www-data:www-data /var/www/dokuwiki/lib
+chown -R www-data:www-data /var/www/dokuwiki/data
+chown -R www-data:www-data /var/www/dokuwiki/conf
+
+# apache configuration
+a2dissite 000-default
+a2ensite dokuwiki
+a2enmod rewrite
+
+# start apache
+service apache2 start
+
+# curl based install
+EMAIL=$(echo $ADMIN_MAIL | sed s/@/%40/)
+URL="http://127.0.0.1/install.php"
+CURL="curl -c /tmp/cookie -b /tmp/cookie"
+
+$CURL $URL
+$CURL $URL --data "l=en&d%5Btitle%5D=${WIKINAME}&d%5Bacl%5D=on&d%5Bsuperuser%5D=${ADMIN_USER}&d%5Bfullname%5D=${ADMIN_USER}&d%5Bemail%5D=${EMAIL}&d%5Bpassword%5D=turnkey&d%5Bconfirm%5D=turnkey&d%5Bpolicy%5D=1&d%5Blicense%5D=cc-by-sa&d%5Bpop%5D=on&submit="
+
+service apache2 stop
 
 # set dokuwiki permissions (anonymous: create, authenticated: upload)
-cat > /var/lib/dokuwiki/acl/acl.auth.php<<EOF
+cat > $WEBROOT/conf/acl.auth.php<<EOF
 *                     @ALL        4
 *                     @user       8
 EOF
 
-# configure permissions so Configuration Manager plugin can be used
-chown_wwwdata() {
-    chmod $3 $1 $2
-    chown $3 www-data:www-data $2
-    dpkg-statoverride --add www-data www-data $1 $2
-}
-chown_wwwdata 4755 /etc/dokuwiki
-chown_wwwdata 0644 /etc/dokuwiki/local.php
-chown_wwwdata 0755 /var/lib/dokuwiki/lib/tpl -R
-chown_wwwdata 0755 /var/lib/dokuwiki/lib/plugins -R
-
 # welcome page
-STARTPAGE=/var/lib/dokuwiki/data/pages/start.txt
+STARTPAGE=$WEBROOT/data/pages/start.txt
 cat >$STARTPAGE<<EOF
 ====== Getting started ======
 
@@ -42,12 +55,3 @@ cat >$STARTPAGE<<EOF
 EOF
 
 chown www-data:root $STARTPAGE
-
-# apache configuration
-rm -f /etc/apache2/conf-available/dokuwiki.conf
-touch /etc/apache2/conf-available/dokuwiki.conf
-ln -s /etc/dokuwiki/apache.conf /etc/apache2/sites-available/dokuwiki.conf
-a2dissite 000-default
-a2ensite dokuwiki
-a2enmod rewrite
-
