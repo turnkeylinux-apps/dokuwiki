@@ -19,8 +19,9 @@ and on top of that:
    - Clean URLs out of the box.
 
    **Security note**: Updates to DokuWiki may require supervision so they
-   **ARE NOT** configured to install automatically. See `DokuWiki
-   documentation`_ for how to upgrade (manual upgrade instructions).
+   **ARE NOT** configured to install automatically. See DokuWiki
+   documentation for how to upgrade, either `manually`_, or via the
+   `upgrade plugin`_.
 
 - SSL support out of the box.
 - Postfix MTA (bound to localhost) to allow sending of email (e.g.,
@@ -36,4 +37,5 @@ Credentials *(passwords set at first boot)*
 
 .. _DokuWiki: http://www.dokuwiki.org
 .. _TurnKey Core: https://www.turnkeylinux.org/core
-.. _DokuWiki documentation: https://www.dokuwiki.org/install:upgrade
+.. _manually: https://www.dokuwiki.org/install:upgrade
+.. _upgrade plugin: https://www.dokuwiki.org/plugin:upgrade
