@@ -55,3 +55,4 @@ cat >$STARTPAGE<<EOF
 EOF
 
 chown www-data:root $STARTPAGE
+rm $WEBROOT/install.php
