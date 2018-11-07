@@ -1,3 +1,11 @@
+turnkey-dokuwiki-15.1 (1) turnkey; urgency=low
+
+  * Remove leftover installation files.
+
+  * Includes upgrade plugin.
+
+ -- Stefan Davis <stefan@turnkeylinux.org>  Tue, 23 Oct 2018 04:57:20 +1000
+
 turnkey-dokuwiki-15.0 (1) turnkey; urgency=low
 
   * Includes latest upstream stable version of dokuwiki.

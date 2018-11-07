@@ -54,4 +54,10 @@ cat >$STARTPAGE<<EOF
   * [[doku>manual|The official DokuWiki manual]]
 EOF
 
-chown www-data:root $STARTPAGE
+rm $WEBROOT/install.php
+
+cd $WEBROOT/lib/plugins
+git clone https://github.com/splitbrain/dokuwiki-plugin-upgrade upgrade
+
+# don't remove previous chown commands, they break the curl install
+chown -R www-data:www-data /var/www/dokuwiki
