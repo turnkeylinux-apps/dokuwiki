@@ -1,13 +1,13 @@
 Locking Down DokuWiki
 =====================
 
-As of v15.1 the turnkeylinux dokuwiki appliance comes shipped with the upgrade plugin
-(http://www.dokuwiki.org/plugin:upgraded) by Andreas Gohr to streamline dokuwiki
-upgrades. Because of this the permissions on the webroot of dokuwiki have been loosened.
+As of v15.1 the turnkeylinux dokuwiki appliance includes the `upgrade plugin`_
+by Andreas Gohr to streamline dokuwiki upgrades. Because of this the
+permissions on the webroot of dokuwiki have been loosened.
 
-These instructions show you how to lock the permissions back down although remember
-this will disable the functionality of the dokuwiki upgrade plugin
-(and possibly plugins in general).
+These instructions show you how to lock the permissions back down. Although
+remember that this will disable the functionality of the dokuwiki upgrade
+plugin (and possibly plugins in general).
 
 
 .. code-block:: bash
@@ -31,3 +31,6 @@ To re-loosen permissions do the following:
     cd /var/www/dokuwiki
 
     chown -R www-data:www-data . # enable access to everything
+
+
+.. _upgrade plugin: http://www.dokuwiki.org/plugin:upgraded

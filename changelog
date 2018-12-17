@@ -1,10 +1,10 @@
 turnkey-dokuwiki-15.1 (1) turnkey; urgency=low
 
-  * Remove leftover installation files.
+  * Remove leftover installation files (untracked issue).
 
-  * Includes upgrade plugin.
+  * Includes upgrade plugin - closes #1162.
 
- -- Stefan Davis <stefan@turnkeylinux.org>  Tue, 23 Oct 2018 04:57:20 +1000
+ -- Stefan Davis <stefan@turnkeylinux.org>  Mon, 17 Dec 2018 12:29:10 +1100
 
 turnkey-dokuwiki-15.0 (1) turnkey; urgency=low
 
