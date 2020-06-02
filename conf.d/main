@@ -10,7 +10,7 @@ WEBROOT=/var/www/dokuwiki
 WIKINAME="TurnkeyLinux+DokuWiki"
 
 # unpack
-tar -zxf $SRC/dokuwiki-stable.tgz -C $(dirname $WEBROOT)
+tar -zxf $SRC/dokuwiki-rc.tgz -C $(dirname $WEBROOT)
 mv $(dirname $WEBROOT)/dokuwiki-* $WEBROOT
 chown -R root:root $WEBROOT
 
