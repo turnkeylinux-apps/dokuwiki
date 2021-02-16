@@ -10,3 +10,4 @@ webmin-phpini
 php-gd
 php-cli
 php-mbstring
+php-xml
