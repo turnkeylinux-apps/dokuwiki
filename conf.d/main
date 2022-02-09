@@ -20,6 +20,7 @@ chown -R www-data:www-data /var/www/dokuwiki/conf
 
 # apache configuration
 a2dissite 000-default
+a2enmod headers
 a2ensite dokuwiki
 a2enmod rewrite
 
