@@ -1,6 +1,6 @@
 turnkey-dokuwiki-18 (1) turnkey; urgency=low
 
-  * Install latest upstream version of DokuWiki 4: x.y.z (as of today, automatically searches for the revision).
+  * Install latest upstream version of DokuWiki 4: Release 2023-04-04a "Jack Jackrum" (as of today, automatically searches for the revision).
 
   * Re-build on TurnKey Linux 18 (Debian 12 'bookworm')
 
