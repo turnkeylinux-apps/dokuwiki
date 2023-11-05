@@ -1,5 +1,9 @@
 turnkey-dokuwiki-18.0 (1) turnkey; urgency=low
 
+  * Ensure hashfile includes URL to public key - closes #1864.
+
+  * Include webmin-logviewer module by default - closes #1866.
+
   * Install latest upstream version of DokuWiki 4: Release 2023-04-04a "Jack
     Jackrum"
 
