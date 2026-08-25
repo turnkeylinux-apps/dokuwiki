@@ -10,21 +10,18 @@ creation of structured texts.
 This appliance includes all the standard features in `TurnKey Core`_,
 and on top of that:
 
-- Dokuwiki configurations:
+- DokuWiki configurations:
    
-   - Installed from upstream source code to /var/www/dokuwiki.
+   - Installed from the Debian Trixie package. Application code is in
+     ``/usr/share/dokuwiki``, configuration is in ``/etc/dokuwiki`` and wiki
+     data is in ``/var/lib/dokuwiki``.
    - Created admin user and group.
    - Granted authenticated users with upload privileges.
-   - Includes `upgrade plugin`_ (and relaxed permsissions) to support WebUI
-     DokuWiki updates.
-   - Fixed permissions for Configuration Manager plugin.
    - Clean URLs out of the box.
 
-   **Security note**: Updates to DokuWiki may require supervision so they
-   **ARE NOT** configured to install automatically. See DokuWiki
-   documentation for how to upgrade, either `manually`_, or via the
-   `upgrade plugin`_. For additional security, DokuWiki permissions can be
-   "locked down" - for details please see the relevant `doc page`_.
+   DokuWiki security updates are delivered through the signed Debian package
+   repositories. Application code remains managed by APT while wiki content
+   and local configuration remain persistent.
 
 - SSL support out of the box.
 - Postfix MTA (bound to localhost) to allow sending of email (e.g.,
@@ -35,11 +32,8 @@ and on top of that:
 Credentials *(passwords set at first boot)*
 -------------------------------------------
 
--  Webmin, Webshell, SSH, MySQL: username **root**
--  Dokuwiki: username **admin**
+-  Webmin, SSH: username **root**
+-  DokuWiki: username **admin**
 
 .. _DokuWiki: http://www.dokuwiki.org
 .. _TurnKey Core: https://www.turnkeylinux.org/core
-.. _manually: https://www.dokuwiki.org/install:upgrade
-.. _upgrade plugin: https://www.dokuwiki.org/plugin:upgrade
-.. _doc page: https://github.com/turnkeylinux-apps/dokuwiki/blob/master/docs/locking-down.rst

@@ -61,7 +61,7 @@ def main():
 
     inithooks_cache.write('APP_EMAIL', email)
     
-    authfile = "/var/www/dokuwiki/conf/users.auth.php"
+    authfile = "/var/lib/dokuwiki/acl/users.auth.php"
     hashpass = genpasswd(password)
 
     lines = []
@@ -84,4 +84,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

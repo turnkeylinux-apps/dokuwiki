@@ -2,6 +2,7 @@
 
 apache2
 webmin-apache
+dokuwiki
 
 libapache2-mod-xsendfile
 libapache2-mod-php
@@ -9,5 +10,6 @@ webmin-phpini
 
 php-gd
 php-cli
+php-intl
 php-mbstring
 php-xml
