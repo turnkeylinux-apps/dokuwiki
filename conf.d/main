@@ -38,6 +38,7 @@ chmod 0600 "$STATE/acl/users.auth.php"
 # apache configuration
 a2dissite 000-default
 a2disconf dokuwiki || true
+a2enmod ssl
 a2enmod headers
 a2ensite dokuwiki
 a2enmod rewrite
