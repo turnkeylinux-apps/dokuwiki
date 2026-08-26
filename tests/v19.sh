@@ -11,9 +11,16 @@ headers=/tmp/tkl-dokuwiki-headers.$$
 edit=/tmp/tkl-dokuwiki-edit.$$
 policy=/tmp/tkl-dokuwiki-policy.$$
 
+report_error() {
+    printf 'test_failure line=%s status=%s command=%q\n' \
+        "$1" "$2" "$3" >&2
+    exit "$2"
+}
+
 cleanup() {
     rm -f -- "$cookie" "$page" "$headers" "$edit" "$policy"
 }
+trap 'report_error "$LINENO" "$?" "$BASH_COMMAND"' ERR
 trap cleanup EXIT
 
 systemctl --quiet is-active apache2.service postfix.service multi-user.target
