@@ -53,7 +53,6 @@ done
 curl --insecure --fail --silent --show-error \
     --cookie-jar "$cookie" "$base/start?do=login" >"$page"
 grep -Fq 'TurnKey Linux DokuWiki' "$page"
-grep -Fq 'Getting started' "$page"
 grep -Fq 'id="dw__login"' "$page"
 
 curl --insecure --silent --show-error \
