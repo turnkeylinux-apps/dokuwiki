@@ -1,4 +1,4 @@
-COMMON_CONF = apache-credit apache-vhost
+COMMON_CONF = apache-credit apache-vhost apache-ssl
 COMMON_OVERLAYS = apache
 
 CREDIT_ANCHORTEXT = DokuWiki Appliance

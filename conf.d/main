@@ -1,51 +1,59 @@
-#!/bin/sh -ex
+#!/bin/bash
+set -Eeuo pipefail
 
 ADMIN_USER=admin
 ADMIN_PASS=turnkey
 ADMIN_MAIL=admin@example.com
 
-SRC=/usr/local/src
-WEBROOT=/var/www/dokuwiki
+WEBROOT=/usr/share/dokuwiki
+CONF=/etc/dokuwiki
+STATE=/var/lib/dokuwiki
+WIKINAME="TurnKey Linux DokuWiki"
 
-WIKINAME="TurnkeyLinux+DokuWiki"
+test -f "$WEBROOT/VERSION"
+dpkg-query -W dokuwiki >/dev/null
 
-# unpack
-tar -zxf $SRC/dokuwiki-stable.tgz -C $(dirname $WEBROOT)
-mv $(dirname $WEBROOT)/dokuwiki-* $WEBROOT
-chown -R root:root $WEBROOT
+# Keep packaged application code immutable and configure only Debian's
+# persistent configuration and state locations.
+cat > "$CONF/local.php" <<EOF
+<?php
+\$conf['title'] = '$WIKINAME';
+\$conf['license'] = 'cc-by-sa';
+\$conf['useacl'] = 1;
+\$conf['superuser'] = '@admin';
+\$conf['userewrite'] = 1;
+\$conf['useslash'] = 1;
+\$conf['xsendfile'] = 2;
+EOF
+chown root:root "$CONF/local.php"
+chmod 0644 "$CONF/local.php"
 
-chown www-data:www-data /var/www/dokuwiki/lib
-chown -R www-data:www-data /var/www/dokuwiki/data
-chown -R www-data:www-data /var/www/dokuwiki/conf
+ADMIN_HASH=$(openssl passwd -1 "$ADMIN_PASS")
+printf '%s:%s:%s:%s:%s\n' \
+    "$ADMIN_USER" "$ADMIN_HASH" "$ADMIN_USER" "$ADMIN_MAIL" \
+    'admin,user' > "$STATE/acl/users.auth.php"
+chown www-data:root "$STATE/acl/users.auth.php"
+chmod 0600 "$STATE/acl/users.auth.php"
 
 # apache configuration
 a2dissite 000-default
+a2disconf dokuwiki || true
+a2enmod ssl
 a2enmod headers
 a2ensite dokuwiki
 a2enmod rewrite
 
-# start apache
-service apache2 start
-
-# curl based install
-EMAIL=$(echo $ADMIN_MAIL | sed s/@/%40/)
-URL="http://127.0.0.1/install.php"
-CURL="curl -c /tmp/cookie -b /tmp/cookie"
-
-$CURL $URL
-$CURL $URL --data "l=en&d%5Btitle%5D=${WIKINAME}&d%5Bacl%5D=on&d%5Bsuperuser%5D=${ADMIN_USER}&d%5Bfullname%5D=${ADMIN_USER}&d%5Bemail%5D=${EMAIL}&d%5Bpassword%5D=turnkey&d%5Bconfirm%5D=turnkey&d%5Bpolicy%5D=1&d%5Blicense%5D=cc-by-sa&d%5Bpop%5D=on&submit="
-
-service apache2 stop
-
 # set dokuwiki permissions (anonymous: create, authenticated: upload)
-cat > $WEBROOT/conf/acl.auth.php<<EOF
+cat > "$STATE/acl/acl.auth.php" <<EOF
 *                     @ALL        4
 *                     @user       8
 EOF
+chown www-data:root "$STATE/acl/acl.auth.php"
+chmod 0600 "$STATE/acl/acl.auth.php"
 
 # welcome page
-STARTPAGE=$WEBROOT/data/pages/start.txt
-cat >$STARTPAGE<<EOF
+STARTPAGE=$STATE/data/pages/start.txt
+cat > "$STARTPAGE" <<EOF
 ====== Getting started ======
 
   * Log in as **admin** and start your wiki!
@@ -54,11 +62,5 @@ cat >$STARTPAGE<<EOF
   * [[wiki:dokuwiki|Local DokuWiki documentation]]
   * [[doku>manual|The official DokuWiki manual]]
 EOF
-
-rm $WEBROOT/install.php
-
-cd $WEBROOT/lib/plugins
-git clone https://github.com/splitbrain/dokuwiki-plugin-upgrade upgrade
-
-# don't remove previous chown commands, they break the curl install
-chown -R www-data:www-data /var/www/dokuwiki
+chown www-data:root "$STARTPAGE"
+chmod 0644 "$STARTPAGE"

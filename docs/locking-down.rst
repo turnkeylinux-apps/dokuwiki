@@ -1,36 +1,18 @@
-Locking Down DokuWiki
-=====================
+DokuWiki permissions and updates
+================================
 
-As of v15.1 the turnkeylinux dokuwiki appliance includes the `upgrade plugin`_
-by Andreas Gohr to streamline dokuwiki upgrades. Because of this the
-permissions on the webroot of dokuwiki have been loosened.
+DokuWiki 19.0 uses Debian's package layout. APT owns the application code in
+``/usr/share/dokuwiki`` and the web server cannot modify it. Local
+configuration is stored in ``/etc/dokuwiki``. Wiki pages, media, indexes and
+authentication files are stored under ``/var/lib/dokuwiki`` with only the
+state needed by the application writable by ``www-data``.
 
-These instructions show you how to lock the permissions back down. Although
-remember that this will disable the functionality of the dokuwiki upgrade
-plugin (and possibly plugins in general).
-
-
-.. code-block:: bash
-
-    cd /var/www/dokuwiki
-
-    chown -R root:root . # disable access to everything
-    chown www-data:www-data ./lib # enable access to lib directory
-    chown -R www-data:www-data ./data # enable access to data directory (where pages are stored)
-    chown -R www-data:www-data ./conf # enable access to conf directory
-
-    # this will enable some plugins although anything which requires write access outside
-    # of it's installation directory will not work due to the permissions we've set
-    chown www-data:www-data ./lib/plugins # enable access to plugins directory
-
-
-To re-loosen permissions do the following:
+Use the standard Debian update path for DokuWiki itself:
 
 .. code-block:: bash
 
-    cd /var/www/dokuwiki
+    apt update
+    apt install --only-upgrade dokuwiki
 
-    chown -R www-data:www-data . # enable access to everything
-
-
-.. _upgrade plugin: http://www.dokuwiki.org/plugin:upgraded
+Back up ``/etc/dokuwiki`` and ``/var/lib/dokuwiki`` before a major upgrade or
+permission customization.
